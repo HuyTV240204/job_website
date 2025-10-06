@@ -1,0 +1,81 @@
+<!-- cái này là nhà tuyển dụng nó đăng-->
+ <!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng tin tuyển dụng</title>
+</head>
+<body>
+  <h2>🧑‍💼 Đăng bài tuyển dụng</h2>
+
+  <form id="jobForm">
+    <input type="text" id="company" placeholder="Tên công ty" required><br>
+    <input type="text" id="title" placeholder="Vị trí tuyển dụng" required><br>
+    <input type="text" id="location" placeholder="Địa điểm (VD: Hà Nội, TP.HCM)" required><br>
+    <input type="text" id="salary" placeholder="Mức lương (VD: 15-25 triệu)" required><br>
+    <textarea id="description" placeholder="Mô tả công việc..." required></textarea><br>
+    <button type="submit">💾 Đăng tin</button>
+  </form>
+
+  <button id="logoutBtn">🚪 Đăng xuất</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
+      authDomain: "job-website-97920.firebaseapp.com",
+      projectId: "job-website-97920",
+      storageBucket: "job-website-97920.appspot.com",
+      messagingSenderId: "107059239491",
+      appId: "1:107059239491:web:228393f257176633c092f6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("jobForm");
+    const logoutBtn = document.getElementById("logoutBtn");
+    let currentUser = null;
+
+    // Kiểm tra user đăng nhập
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        alert("Bạn phải đăng nhập trước!");
+        window.location.href = "login.html";
+      } else {
+        currentUser = user;
+      }
+    });
+
+    // Gửi form đăng bài
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentUser) return alert("Bạn chưa đăng nhập!");
+
+      const newJob = {
+        company: document.getElementById("company").value,
+        title: document.getElementById("title").value,
+        location: document.getElementById("location").value,
+        salary: document.getElementById("salary").value,
+        description: document.getElementById("description").value,
+        createdBy: currentUser.uid,
+        createdAt: new Date()
+      };
+
+      await addDoc(collection(db, "jobs"), newJob);
+      alert("✅ Đã đăng bài tuyển dụng!");
+      form.reset();
+    });
+
+    // Đăng xuất
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

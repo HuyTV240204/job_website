@@ -1,139 +1,97 @@
 <!DOCTYPE html>
-<!-- djtme DNTU -->
 <html lang="vi">
-    <!-- djtme DNTU-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ứng tuyển việc làm</title>
-        <link rel="icon" href="image/favicon.ico" type="image/x-icon">
-
-
-    <!-- Liên kết đến file CSS nhé, djtme thang nao xoa hay sua chat cu -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ứng tuyển việc làm</title>
+  <link rel="icon" href="image/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Thanh Menu -->
+  <header class="main-header">
+    <div class="container">
+      <a href="#" class="logo"></a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#">Trang chủ</a></li>
+          <li><a href="#">Job thịnh hành</a></li>
+          <li><a href="#">Đăng nhập</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Thanh Menu -->
-    <header class="main-header">
-        <div class="container">
-            <a href="#" class="logo"></a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Job thịnh hành</a></li>
-                    <li><a href="#">Đăng nhập</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <!-- Danh sách việc làm -->
+  <main class="container">
+    <h1>Việc làm hấp dẫn</h1>
+    <div class="job-listing-container" id="job-listing"></div>
+  </main>
 
-    <!-- đầu -->
-    <main class="container">
-        <h1>Việc làm hấp dẫn</h1>
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Bản quyền thuộc về hội Ma Đạo, kẻ tìm việc cho anh em thất bại.</p>
+    </div>
+  </footer>
 
-        <div class="job-listing-container">
-            <!-- job 1 -->
+  <!-- Firebase config + load dữ liệu -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+    // Cấu hình Firebase của bạn
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
+      authDomain: "job-website-97920.firebaseapp.com",
+      projectId: "job-website-97920",
+      storageBucket: "job-website-97920.appspot.com",
+      messagingSenderId: "107059239491",
+      appId: "1:107059239491:web:228393f257176633c092f6"
+    };
+
+    // Khởi tạo Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Hiển thị danh sách job từ Firestore
+    async function loadJobs() {
+      const container = document.getElementById("job-listing");
+      container.innerHTML = "<p>⏳ Đang tải danh sách việc làm...</p>";
+
+      try {
+        const querySnapshot = await getDocs(collection(db, "jobs"));
+        container.innerHTML = "";
+
+        if (querySnapshot.empty) {
+          container.innerHTML = "<p>Không có job nào trong hệ thống 😢</p>";
+          return;
+        }
+
+        querySnapshot.forEach((doc) => {
+          const job = doc.data();
+          const jobCard = `
             <div class="job-card">
-                <h3>Lập trình viên Front-end</h3>
-                <p class="company">Công ty Công nghệ Ma Đạo</p>
-                <div class="details">
-                    <span>📍 Hà Nội</span>
-                    <span>💰 15-25 triệu</span>
-                </div>
-                <p class="description">
-                    Tìm kiếm lập trình viên Front-end có kinh nghiệm với ReactJS và Vue.js, am hiểu về responsive design.
-                </p>
-                <a href="#" class="btn-apply">Ứng tuyển ngay</a>
+              <h3>${job.title}</h3>
+              <p class="company">${job.company}</p>
+              <div class="details">
+                <span>📍 ${job.location}</span>
+                <span>💰 ${job.salary}</span>
+              </div>
+              <p class="description">${job.description}</p>
+              <a href="#" class="btn-apply">Ứng tuyển ngay</a>
             </div>
+          `;
+          container.innerHTML += jobCard;
+        });
 
-            <!-- job 2 -->
-            <div class="job-card">
-                <h3>Chuyên viên Marketing Kỹ thuật số</h3>
-                <p class="company">Tập đoàn Meta</p>
-                <div class="details">
-                    <span>📍 TP. Hồ Chí Minh</span>
-                    <span>💰 12-20 triệu</span>
-                </div>
-                <p class="description">
-                    Chịu trách nhiệm lên kế hoạch và thực thi các chiến dịch marketing trên các kênh online (SEO, Google Ads, Facebook Ads).
-                </p>
-                <a href="#" class="btn-apply">Ứng tuyển ngay</a>
-            </div>
+      } catch (error) {
+        console.error("❌ Lỗi khi tải job:", error);
+        container.innerHTML = "<p>Lỗi khi tải dữ liệu 😥</p>";
+      }
+    }
 
-            <!-- job 3 -->
-            <div class="job-card">
-                <h3>Nhân viên Kinh doanh</h3>
-                <p class="company">Công ty Phân phối Ma Đạo</p>
-                <div class="details">
-                    <span>📍 Đà Nẵng</span>
-                    <span>💰 10-18 triệu (thu nhập không giới hạn)</span>
-                </div>
-                <p class="description">
-                    Tìm kiếm, tiếp cận khách hàng tiềm năng và tư vấn các giải pháp sản phẩm phù hợp. Không yêu cầu kinh nghiệm.
-                </p>
-                <a href="#" class="btn-apply">Ứng tuyển ngay</a>
-            </div>
-
-            <!-- job 4 -->
-            <div class="job-card">
-                <h3>Thiết kế UI/UX</h3>
-                <p class="company">Studio Sáng tạo Ma Đạo</p>
-                <div class="details">
-                    <span>📍 Hà Nội</span>
-                    <span>💰 18-30 triệu</span>
-                </div>
-                <p class="description">
-                    Thiết kế giao diện và trải nghiệm người dùng cho các ứng dụng di động và website. Thành thạo Figma, Sketch.
-                </p>
-                <a href="#" class="btn-apply">Ứng tuyển ngay</a>
-            </div>
-
-            <!-- job 5 -->
-            <div class="job-card">
-                <h3>Kế toán tổng hợp</h3>
-                <p class="company">Công ty Kế toán Ma Đạo</p>
-                <div class="details">
-                    <span>📍 TP. Hồ Chí Minh</span>
-                    <span>💰 12-15 triệu</span>
-                </div>
-                <p class="description">
-                    Quản lý sổ sách kế toán, báo cáo thuế, báo cáo tài chính cuối kỳ. Yêu cầu có chứng chỉ kế toán.
-                </p>
-                <a href="#" class="btn-apply">Ứng tuyển ngay</a>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Bản quyền thuộc về hội Ma Đạo, kẻ tìm việc cho anh em thất bại.</p>
-        </div>
-    </footer>
-    <!-- Firebase config -->
-<script type="module">
-  // Import các SDK cần thiết
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-  // Cấu hình Firebase của bạn
-  const firebaseConfig = {
-    apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
-    authDomain: "job-website-97920.firebaseapp.com",
-    projectId: "job-website-97920",
-    storageBucket: "job-website-97920.appspot.com",
-    messagingSenderId: "107059239491",
-    appId: "1:107059239491:web:228393f257176633c092f6"
-  };
-
-  // Khởi tạo Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  console.log("✅ Firebase đã kết nối thành công!");
-</script>
+    loadJobs();
+  </script>
 </body>
 </html>
