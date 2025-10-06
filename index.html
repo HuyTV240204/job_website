@@ -111,6 +111,29 @@
             <p>&copy; 2025 Bản quyền thuộc về hội Ma Đạo, kẻ tìm việc cho anh em thất bại.</p>
         </div>
     </footer>
+    <!-- Firebase config -->
+<script type="module">
+  // Import các SDK cần thiết
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
+  // Cấu hình Firebase của bạn
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
+    authDomain: "job-website-97920.firebaseapp.com",
+    projectId: "job-website-97920",
+    storageBucket: "job-website-97920.appspot.com",
+    messagingSenderId: "107059239491",
+    appId: "1:107059239491:web:228393f257176633c092f6"
+  };
+
+  // Khởi tạo Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  console.log("✅ Firebase đã kết nối thành công!");
+</script>
 </body>
 </html>
