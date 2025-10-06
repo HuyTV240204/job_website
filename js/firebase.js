@@ -1,28 +1,29 @@
 // js/firebase.js
-
-// Import SDKs (chèn đoạn script Firebase từ CDN trước trong HTML nếu chưa có)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-  from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-import { getFirestore, setDoc, doc } 
-  from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+import { 
+  getFirestore, 
+  setDoc, 
+  doc 
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-// ⚙️ Cấu hình Firebase (copy phần config của bạn trong Firebase console)
+// ⚙️ Firebase config
 const firebaseConfig = {
-  apiKey: "API_KEY_CỦA_BẠN",
-  authDomain: "AUTH_DOMAIN_CỦA_BẠN",
-  projectId: "PROJECT_ID_CỦA_BẠN",
-  storageBucket: "STORAGE_BUCKET_CỦA_BẠN",
-  messagingSenderId: "SENDER_ID_CỦA_BẠN",
-  appId: "APP_ID_CỦA_BẠN"
+  apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
+  authDomain: "job-website-97920.firebaseapp.com",
+  projectId: "job-website-97920",
+  storageBucket: "job-website-97920.appspot.com",
+  messagingSenderId: "107059239491",
+  appId: "1:107059239491:web:228393f257176633c092f6"
 };
 
-// Khởi tạo Firebase
+// 🚀 Khởi tạo Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-console.log("🔥 Firebase đã kết nối thành công!");
-
-// Export ra để file khác dùng
 export { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, setDoc, doc };
