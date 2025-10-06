@@ -8,11 +8,18 @@
   <h2>Đăng ký tài khoản</h2>
 
   <form id="registerForm">
-    <input type="text" id="name" placeholder="Họ tên" required><br>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="password" id="password" placeholder="Mật khẩu" required><br>
-    <button type="submit">Đăng ký</button>
-  </form>
+  <input type="text" id="name" placeholder="Họ tên" required><br>
+  <input type="email" id="email" placeholder="Email" required><br>
+  <input type="password" id="password" placeholder="Mật khẩu" required><br>
+
+  <select id="role" required>
+    <option value="">-- Chọn vai trò --</option>
+    <option value="applicant">Người ứng tuyển</option>
+    <option value="employer">Nhà tuyển dụng</option>
+  </select><br>
+
+  <button type="submit">Đăng ký</button>
+</form>
 
   <p>Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
 
@@ -62,5 +69,6 @@
       }
     });
   </script>
+  <script type="module" src="/js/register.js"></script>
 </body>
 </html>
