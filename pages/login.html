@@ -20,36 +20,42 @@
   <p><a href="/pages/index.html">⬅ Quay về trang chủ</a></p>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
-      authDomain: "job-website-97920.firebaseapp.com",
-      projectId: "job-website-97920",
-      storageBucket: "job-website-97920.appspot.com",
-      messagingSenderId: "107059239491",
-      appId: "1:107059239491:web:228393f257176633c092f6"
-    };
+  // ✅ Cấu hình Firebase (giống file register.html)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
+    authDomain: "job-website-97920.firebaseapp.com",
+    projectId: "job-website-97920",
+    storageBucket: "job-website-97920.appspot.com",
+    messagingSenderId: "107059239491",
+    appId: "1:107059239491:web:228393f257176633c092f6"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  // ✅ Khởi tạo Firebase Auth
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+  // ✅ Xử lý đăng nhập
+  const loginForm = document.getElementById("loginForm");
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("Đăng nhập thành công!");
-        window.location.href = "index.html";
-      } catch (error) {
-        alert("Lỗi: " + error.message);
-      }
-    });
-  </script>
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("🎉 Đăng nhập thành công!");
+      window.location.href = "/pages/index.html"; // quay về trang chủ
+    } catch (error) {
+      console.error("❌ Lỗi đăng nhập:", error);
+      alert("❌ Lỗi: " + error.message);
+    }
+  });
+</script>
+
   <script type="module" src="/js/login.js"></script>
 </body>
 </html>
