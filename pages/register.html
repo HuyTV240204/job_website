@@ -3,30 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Đăng ký tài khoản</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <h2>Đăng ký tài khoản</h2>
+<body class="center-content">
+  
+
+  <h1>Đăng ký tài khoản</h1>
 
   <form id="registerForm">
-  <input type="text" id="name" placeholder="Họ tên" required><br>
-  <input type="email" id="email" placeholder="Email" required><br>
-  <input type="password" id="password" placeholder="Mật khẩu" required><br>
-
-  <select id="role" required>
-    <option value="">-- Chọn vai trò --</option>
-    <option value="applicant">Người ứng tuyển</option>
-    <option value="employer">Nhà tuyển dụng</option>
-  </select><br>
-
-  <button type="submit">Đăng ký</button>
-</form>
-
-  <p>Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+    <input type="text" id="name" placeholder="Họ tên" required><br>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Mật khẩu" required><br>
+    <button type="submit">Đăng ký</button>
+  </form>
+    <div class="auth-text">
+      <p>Đã có tài khoản?</p>
+      <a href="login.html">Đăng nhập</a>
+      <p><a href="/pages/index.html">⬅ Quay về trang chủ</a></p>
+    </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAqy3ZQVragF-GD6Cr8MCoq_KSywsrnKGQ",
@@ -39,36 +37,24 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    const registerForm = document.getElementById('registerForm');
-    registerForm.addEventListener('submit', async (e) => {
+    // Xử lý form đăng ký
+    const registerForm = document.getElementById("registerForm");
+    registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        await updateProfile(user, { displayName: name });
-
-        // Lưu thông tin người dùng vào Firestore
-        await setDoc(doc(db, "users", user.uid), {
-          name,
-          email,
-          role: "applicant", // mặc định là người ứng tuyển
-          createdAt: new Date()
-        });
-
-        alert("Đăng ký thành công!");
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("🎉 Đăng ký thành công!");
         window.location.href = "login.html";
       } catch (error) {
-        alert("Lỗi: " + error.message);
+        alert("❌ Lỗi: " + error.message);
       }
     });
   </script>
-  <script type="module" src="/js/register.js"></script>
+
 </body>
 </html>
