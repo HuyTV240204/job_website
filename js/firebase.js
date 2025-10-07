@@ -26,4 +26,5 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, setDoc, doc };
+import { getDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+export { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, setDoc, doc, getDoc };
