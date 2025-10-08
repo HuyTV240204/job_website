@@ -23,11 +23,11 @@ form.addEventListener("submit", async (e) => {
 
       // Điều hướng
       if (data.role === "candidate") {
-        window.location.href = "/index.html";
+        window.location.href = "./index.html";
       } else if (data.role === "employer") {
-        window.location.href = "/post-job.html";
+        window.location.href = "./post-job.html";
       } else {
-        window.location.href = "/index.html";
+        window.location.href = "./index.html";
       }
     } else {
       alert("⚠️ Không tìm thấy thông tin người dùng trong database!");
