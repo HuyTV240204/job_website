@@ -23,7 +23,7 @@ form.addEventListener("submit", async (e) => {
 
       // Điều hướng
       if (data.role === "candidate") {
-        window.location.href = "./index.html";
+        window.location.href = "./profile.html";
       } else if (data.role === "employer") {
         window.location.href = "./post-job.html";
       } else {
