@@ -48,7 +48,7 @@
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("🎉 Đăng nhập thành công!");
-      window.location.href = "/pages/index.html"; // quay về trang chủ
+      window.location.href = "/index.html"; // quay về trang chủ
     } catch (error) {
       console.error("❌ Lỗi đăng nhập:", error);
       alert("❌ Lỗi: " + error.message);
